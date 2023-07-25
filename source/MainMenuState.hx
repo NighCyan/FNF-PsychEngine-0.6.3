@@ -55,7 +55,7 @@ class MainMenuState extends MusicBeatState
 	{
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
-       public static var logoJSON:LogoData = Json.parse(Paths.getTextFromFile('images/mainEditor.json'));
+       var logoJSON:LogoData = Json.parse(Paths.getTextFromFile('images/mainEditor.json'));
 		#if MODS_ALLOWED
 		Paths.pushGlobalMods();
 		#end
