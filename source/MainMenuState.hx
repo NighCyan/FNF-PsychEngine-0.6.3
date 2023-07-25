@@ -18,6 +18,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import lime.app.Application;
 import Achievements;
+import haxe.Json;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
 
@@ -157,7 +158,7 @@ class MainMenuState extends MusicBeatState
 
 		// NG.core.calls.event.logEvent('swag').send();
 
-		changeItem();
+		
 
 		#if ACHIEVEMENTS_ALLOWED
 		Achievements.loadAchievements();
