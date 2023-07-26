@@ -22,7 +22,14 @@ import flash.system.System;
  */
 
 using StringTools;
-
+typedef CodeData =
+{
+	
+	logox:Float,
+	logoy:Float,
+	scaleX:Float,
+	scaleY:Float
+}
 class SUtil
 {
 	#if android
@@ -47,7 +54,7 @@ class SUtil
 		if (!Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || !Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
 		{
 			Permissions.requestPermissions([PermissionsList.READ_EXTERNAL_STORAGE, PermissionsList.WRITE_EXTERNAL_STORAGE]);
-			SUtil.applicationAlert('Permissions', "if you acceptd the permissions all good if not expect a crash" + '\n' + 'Press Ok to see what happens');
+			SUtil.applicationAlert('Tips', "Please enable the permission to read internal files" + '\n' + 'Make sure it is correct and press OK');
 		}
 
 		if (Permissions.getGrantedPermissions().contains(PermissionsList.READ_EXTERNAL_STORAGE) || Permissions.getGrantedPermissions().contains(PermissionsList.WRITE_EXTERNAL_STORAGE))
@@ -57,24 +64,21 @@ class SUtil
 
 			if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
 			{
-				SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the files from the .APK!\nPlease watch the tutorial by pressing OK.");
-				CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
-				System.exit(0);
+				SUtil.applicationAlert('Too bad!', "The game did not read the file\nplease press OK to watch the tutorial");
+				FlxG.switchState(new TutorialState());
 			}
 			else
 			{
 				if (!FileSystem.exists(SUtil.getPath() + 'assets'))
 				{
-					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/assets folder from the .APK!\nPlease watch the tutorial by pressing OK.");
-					CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
-					System.exit(0);
+					SUtil.applicationAlert('Too bad!', "You seem to have forgotten to extract the assets folder\nplease press OK to watch the tutorial");
+					FlxG.switchState(new TutorialState());
 				}
 
 				if (!FileSystem.exists(SUtil.getPath() + 'mods'))
 				{
-					SUtil.applicationAlert('Uncaught Error :(!', "Whoops, seems you didn't extract the assets/mods folder from the .APK!\nPlease watch the tutorial by pressing OK.");
-					CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
-					System.exit(0);
+					SUtil.applicationAlert('Too bad!', "It looks like you forgot to unzip the mods folder\nplease press OK to watch the tutorial");
+					FlxG.switchState(new TutorialState());
 				}
 			}
 		}

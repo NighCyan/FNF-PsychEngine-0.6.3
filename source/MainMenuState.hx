@@ -18,9 +18,10 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import lime.app.Application;
 import Achievements;
-import haxe.Json;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
+import flixel.input.touch.FlxTouch;
+import haxe.Json;
 
 using StringTools;
 typedef LogoData =
@@ -29,7 +30,7 @@ typedef LogoData =
 	logox:Float,
 	logoy:Float,
 	scaleX:Float,
-	scaleY:Float
+	scaleY:Float,
 }
 class MainMenuState extends MusicBeatState
 {
@@ -128,7 +129,6 @@ class MainMenuState extends MusicBeatState
 			menuItem.scale.y = scale;
 			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
-			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
 			menuItem.screenCenter(X);
@@ -211,16 +211,19 @@ class MainMenuState extends MusicBeatState
 			}
 			menuItems.forEach(function(cnm:FlxSprite)
 {
-    for (touch in FlxG.touches.list)
-    {
-        if (touch.justPressed && cantouch)
+           if (FlxG.input.justPressed(FlxTouch.TOUCH_ANY))
         {
-            curSelected = cnm.ID;
+            var touchX:Float = FlxG.touch.x;
+            var touchY:Float = FlxG.touch.y;
+            //curSelected = cnm.ID;
+            
+            if (cnm.overlapsPoint(touchX, touchY))
+            {
             cantouch = false;
             selectedSomethin = true;
             FlxG.sound.play(Paths.sound('confirmMenu'));
-
-            switch (optionShit[curSelected])
+            curSelected = cnm.ID;
+                switch (optionShit[curSelected])
             {
                 case 'story_mode':
                     MusicBeatState.switchState(new StoryMenuState());
@@ -231,24 +234,16 @@ class MainMenuState extends MusicBeatState
                 case 'options':
                     LoadingState.loadAndSwitchState(new options.OptionsState());
             }
+            }
+            else
+            {
+            //do nothing
+            }
+        
             
             cnm.updateHitbox(); 
         }
-        else if (!cantouch)
-        {
-            if (touch.justPressed)
-            {
-                // do nothing
-            }
-        }
-        else
-        {
-            selectedSomethin = true;
-            cantouch = false;
-            FlxG.sound.play(Paths.sound('cancelMenu'));
-            MusicBeatState.switchState(new TitleState());
-        }
-    }
+    
 });
 
 		super.update(elapsed);
