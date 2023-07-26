@@ -13,7 +13,6 @@ import haxe.CallStack.StackItem;
 import haxe.CallStack;
 import haxe.io.Path;
 import sys.FileSystem;
-import flixel.FlxG;
 import sys.io.File;
 import flash.system.System;
 
@@ -66,20 +65,23 @@ class SUtil
 			if (!FileSystem.exists(SUtil.getPath() + 'assets') && !FileSystem.exists(SUtil.getPath() + 'mods'))
 			{
 				SUtil.applicationAlert('Too bad!', "The game did not read the file\nplease press OK to watch the tutorial");
-				FlxG.switchState(new TutorialState());
+				CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
+				System.exit(0);
 			}
 			else
 			{
 				if (!FileSystem.exists(SUtil.getPath() + 'assets'))
 				{
 					SUtil.applicationAlert('Too bad!', "You seem to have forgotten to extract the assets folder\nplease press OK to watch the tutorial");
-					FlxG.switchState(new TutorialState());
+				CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
+				System.exit(0);
 				}
 
 				if (!FileSystem.exists(SUtil.getPath() + 'mods'))
 				{
 					SUtil.applicationAlert('Too bad!', "It looks like you forgot to unzip the mods folder\nplease press OK to watch the tutorial");
-					FlxG.switchState(new TutorialState());
+					CoolUtil.browserLoad('https://youtu.be/zjvkTmdWvfU');
+				System.exit(0);
 				}
 			}
 		}
