@@ -1,5 +1,18 @@
 package;
-
+import android.Tools;
+import android.Permissions;
+import android.PermissionsList;
+#end
+import lime.app.Application;
+import openfl.events.UncaughtErrorEvent;
+import openfl.utils.Assets as OpenFlAssets;
+import openfl.Lib;
+import haxe.CallStack.StackItem;
+import haxe.CallStack;
+import haxe.io.Path;
+import sys.FileSystem;
+import sys.io.File;
+import flash.system.System;
 import flixel.FlxState;
 import flixel.FlxText;
 import flixel.FlxG;
@@ -32,8 +45,10 @@ class TutorialState extends FlxState
         super.update(elapsed);
 
         // 当任意一根手指离开屏幕时，切换回上一个状态
-        if (FlxG.touch.justReleased()) {
+        for (touch in FlxG.touches.list){		
+        if (touch.justPress) {
             System.exit(0);
         }
     }
+   }
 }
