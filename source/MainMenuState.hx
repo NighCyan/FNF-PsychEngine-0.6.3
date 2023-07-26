@@ -210,19 +210,19 @@ class MainMenuState extends MusicBeatState
 			}
 			}
 			menuItems.forEach(function(cnm:FlxSprite)
-{
-           if (FlxG.input.justPressed(FlxTouch.TOUCH_ANY))
-        {
-            var touchX:Float = FlxG.touch.x;
-            var touchY:Float = FlxG.touch.y;
-            //curSelected = cnm.ID;
-            
-            if (cnm.overlapsPoint(touchX, touchY))
+{       for (touch in FlxG.touches.list)
+
+       {   
+        
+        
+            if (touch.justPressed)
             {
+            if (touch.overlaps(cnm))
+            {
+            curSelected = cnm.ID;
             cantouch = false;
             selectedSomethin = true;
             FlxG.sound.play(Paths.sound('confirmMenu'));
-            curSelected = cnm.ID;
                 switch (optionShit[curSelected])
             {
                 case 'story_mode':
@@ -237,10 +237,15 @@ class MainMenuState extends MusicBeatState
             }
             else
             {
-            //do nothing
+            //do nothing lol
+            //我觉得我对haxe有更深入的了解了
             }
-        
             
+        }
+            else
+            {
+            //洽汐来！
+            }
             cnm.updateHitbox(); 
         }
     

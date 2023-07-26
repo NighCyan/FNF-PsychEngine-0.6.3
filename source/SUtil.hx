@@ -13,6 +13,7 @@ import haxe.CallStack.StackItem;
 import haxe.CallStack;
 import haxe.io.Path;
 import sys.FileSystem;
+import flixel.FlxG;
 import sys.io.File;
 import flash.system.System;
 

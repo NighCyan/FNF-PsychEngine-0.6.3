@@ -5,7 +5,8 @@ import flixel.FlxText;
 import flixel.FlxG;
 import flixel.input.touch.FlxTouch;
 
-class TutorialState {
+class TutorialState extends FlxState
+{
     override public function create(): Void {
         super.create();
 
