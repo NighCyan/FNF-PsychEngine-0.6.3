@@ -31,9 +31,17 @@ class VisualsUISubState extends BaseOptionsMenu
 {
 	public function new()
 	{
-		title = 'Visuals and UI';
-		rpcTitle = 'Visuals & UI Settings Menu'; //for Discord Rich Presence
+		title = 'Visuals UI & Music';
+		rpcTitle = 'Visuals UI & Music Settings Menu'; //for Discord Rich Presence
 
+        var option:Option = new Option('Theme Song:',
+			"Which song do you want to use as the theme song?",
+			'mainSong',
+			'string',
+			'Get-involved-in-this-game',
+			['Get-involved-in-this-game', 'adaptation']);
+		addOption(option);
+		option.onChange = onChangeMainMusic;
 		var option:Option = new Option('Note Splashes',
 			"If unchecked, hitting \"Sick!\" notes won't show particles.",
 			'noteSplashes',
@@ -135,10 +143,23 @@ class VisualsUISubState extends BaseOptionsMenu
 
 		changedMusic = true;
 	}
-
+	var changedMainMusic:Bool = false;
+    function onChangeMainMusic()
+    {
+      FlxG.sound.playMusic(Paths.music(ClientPrefs.mainSong));
+      changedMainMusic = true;
+    }
 	override function destroy()
 	{
-		if(changedMusic) FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		if((changedMusic || changedMainMusic) || (changedMusic && changedMainMusic))
+		{
+		  FlxG.sound.playMusic(Paths.music(ClientPrefs.mainSong));
+		}
+		else
+		{
+		/*Fuck you:)
+		It does nothing:(*/
+		}
 		super.destroy();
 	}
 
