@@ -170,20 +170,16 @@ class MainMenuState extends MusicBeatState
 			{
 				case 0:
 					menuItem.setPosition(logoJSON.storyX, logoJSON.storyY);
-					menuItem.setScaleX(logoJSON.storyScaleX);
-					menuItem.setScaleY(logoJSON.storyScaleY);
+					menuItem.scale.set(logoJSON.storyScaleX,logoJSON.storyScaleY);
 				case 1:
-					menuItem.setPosition(logoJSON.FreeX, logoJSON.FreeY);
-					menuItem.setScaleX(logoJSON.FreeScaleX);
-					menuItem.setScaleY(logoJSON.FreeScaleY);
-				case 2:
-					menuItem.setPosition(logoJSON.CreditsX, logoJSON.CreditsY);
-					menuItem.setScaleX(logoJSON.CreditsScaleX);
-					menuItem.setScaleY(logoJSON.CreditsScaleY);
-				case 3:
-					menuItem.setPosition(logoJSON.optionX, logoJSON.optionY);
-					menuItem.setScaleX(logoJSON.optionScaleX);
-					menuItem.setScaleY(logoJSON.optionScaleY);
+    menuItem.setPosition(logoJSON.FreeX, logoJSON.FreeY);
+    menuItem.scale.set(logoJSON.FreeScaleX, logoJSON.FreeScaleY);
+case 2:
+    menuItem.setPosition(logoJSON.CreditsX, logoJSON.CreditsY);
+    menuItem.scale.set(logoJSON.CreditsScaleX, logoJSON.CreditsScaleY);
+case 3:
+    menuItem.setPosition(logoJSON.optionX, logoJSON.optionY);
+    menuItem.scale.set(logoJSON.optionScaleX, logoJSON.optionScaleY);
 	//6
 			}
 		}
