@@ -31,6 +31,31 @@ typedef LogoData =
 	logoy:Float,
 	scaleX:Float,
 	scaleY:Float,
+	storyX:Float,
+	storyY:Float,
+	storyScaleX:Float,
+	storyScaleY:Float,
+	FreeX:Float,
+	FreeY:Float,
+	FreeScaleX:Float,
+	FreeScaleY:Float,
+	CreditsX:Float,
+	CreditsY:Float,
+	CreditsScaleX:Float,
+	CreditsScaleY:Float,
+	optionX:Float,
+	optionY:Float,
+	optionScaleX:Float,
+	optionScaleY:Float,
+	backX:Float,
+	backY:Float,
+	backScaleX:Float,
+	backScaleY:Float,
+	windowX:Float,
+	windowY:Float,
+	windowScaleX:Float,
+	windowScaleY:Float,
+	Background:String
 }
 class MainMenuState extends MusicBeatState
 {
@@ -48,13 +73,13 @@ class MainMenuState extends MusicBeatState
 		'options'
 	];
 
-	var magenta:FlxSprite;
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
 
 	override function create()
 	{
+	    FlxG.mouse.visible = true;
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
        var logoJSON:LogoData = Json.parse(Paths.getTextFromFile('images/mainEditor.json'));
@@ -83,35 +108,37 @@ class MainMenuState extends MusicBeatState
 		persistentUpdate = persistentDraw = true;
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image(logoJSON.Background));
 		bg.scrollFactor.set(0, yScroll);
 		bg.setGraphicSize(Std.int(bg.width * 1.175));
 		bg.updateHitbox();
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
-
+        var back:FlxSprite = new FlxSprite(logoJSON.backX, logoJSON.backY);
+		back.frames = Paths.getSparrowAtlas('backbutton');
+		back.scale.set(logoJSON.backScaleX, logoJSON.backScaleY);
+		add(back);
+		var window:FlxSprite = new FlxSprite(logoJSON.windowX,logoJSON.windowY)
+		back.frames = Paths.getSparrowAtlas('window');
+		window.scale.set(logoJSON.windowScaleX, logoJSON.windowScaleY);
+		add(window);
 		camFollow = new FlxObject(0, 0, 1, 1);
 		camFollowPos = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 		add(camFollowPos);
-
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
-		magenta.scrollFactor.set(0, yScroll);
-		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
-		magenta.updateHitbox();
-		magenta.screenCenter();
-		magenta.visible = false;
-		magenta.antialiasing = ClientPrefs.globalAntialiasing;
-		magenta.color = 0xFFfd719b;
-		add(magenta);
 		var logo:FlxSprite = new FlxSprite(logoJSON.logox, logoJSON.logoy);
 		logo.frames = Paths.getSparrowAtlas('logoBumpin-GOP');
 		logo.animation.addByPrefix('bump', 'logo bumpin', 24,true);
 		logo.scale.set(logoJSON.scaleX, logoJSON.scaleY);
 	    logo.animation.play('bump');
 		add(logo);
-		
+		var window:FlxSprite = new FlxSprite(logoJSON.windowX, logoJSON.windowY);
+		logo.frames = Paths.getSparrowAtlas('logoBumpin-GOP');
+		logo.animation.addByPrefix('bump', 'logo bumpin', 24,true);
+		logo.scale.set(logoJSON.scaleX, logoJSON.scaleY);
+	    logo.animation.play('bump');
+		add(logo);
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
@@ -139,6 +166,26 @@ class MainMenuState extends MusicBeatState
 			menuItem.antialiasing = ClientPrefs.globalAntialiasing;
 			//menuItem.setGraphicSize(Std.int(menuItem.width * 0.58));
 			menuItem.updateHitbox();
+			switch (i)
+			{
+				case 0:
+					menuItem.setPosition(logoJSON.storyX, logoJSON.storyY);
+					menuItem.setScaleX(logoJSON.storyScaleX);
+					menuItem.setScaleY(logoJSON.storyScaleY);
+				case 1:
+					menuItem.setPosition(logoJSON.FreeX, logoJSON.FreeY);
+					menuItem.setScaleX(logoJSON.FreeScaleX);
+					menuItem.setScaleY(logoJSON.FreeScaleY);
+				case 2:
+					menuItem.setPosition(logoJSON.CreditsX, logoJSON.CreditsY);
+					menuItem.setScaleX(logoJSON.CreditsScaleX);
+					menuItem.setScaleY(logoJSON.CreditsScaleY);
+				case 3:
+					menuItem.setPosition(logoJSON.optionX, logoJSON.optionY);
+					menuItem.setScaleX(logoJSON.optionScaleX);
+					menuItem.setScaleY(logoJSON.optionScaleY);
+	//6
+			}
 		}
 
 		FlxG.camera.follow(camFollowPos, null, 1);
@@ -160,30 +207,12 @@ class MainMenuState extends MusicBeatState
 
 		
 
-		#if ACHIEVEMENTS_ALLOWED
-		Achievements.loadAchievements();
-		var leDate = Date.now();
-		if (leDate.getDay() == 5 && leDate.getHours() >= 18) {
-			var achieveID:Int = Achievements.getAchievementIndex('friday_night_play');
-			if(!Achievements.isAchievementUnlocked(Achievements.achievementsStuff[achieveID][2])) { //It's a friday night. WEEEEEEEEEEEEEEEEEE
-				Achievements.achievementsMap.set(Achievements.achievementsStuff[achieveID][2], true);
-				giveAchievement();
-				ClientPrefs.saveSettings();
-			}
-		}
-		#end
+		
 
 		super.create();
 	}
 
-	#if ACHIEVEMENTS_ALLOWED
-	// Unlocks "Freaky on a Friday Night" achievement
-	function giveAchievement() {
-		add(new AchievementObject('friday_night_play', camAchievement));
-		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
-		trace('Giving achievement "friday_night_play"');
-	}
-	#end
+	
 
 	var selectedSomethin:Bool = false;
 
@@ -198,7 +227,7 @@ class MainMenuState extends MusicBeatState
 		var lerpVal:Float = CoolUtil.boundTo(elapsed * 7.5, 0, 1);
 		camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 
-		if (!selectedSomethin)
+		/*if (!selectedSomethin)
 		{
 
 			if (FlxG.keys.justReleased.BACKSPACE)
@@ -208,7 +237,7 @@ class MainMenuState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				MusicBeatState.switchState(new TitleState());
 			}
-			}
+			}*/
 			menuItems.forEach(function(cnm:FlxSprite)
 {       for (touch in FlxG.touches.list)
 
@@ -235,19 +264,20 @@ class MainMenuState extends MusicBeatState
                     LoadingState.loadAndSwitchState(new options.OptionsState());
             }
             }
-            else
+         /*   else
             {
             //do nothing lol
             //我觉得我对haxe有更深入的了解了
-            }
+         他奶奶滴加了这行代码全面屏手机就会出bug   }*/
             
         }
-            else
+         /*   else
             {
             //洽汐来！
             }
             cnm.updateHitbox(); 
-        }
+        }*/
+        cnm.updateHitbox(); 
     
 });
 
@@ -258,4 +288,16 @@ class MainMenuState extends MusicBeatState
 			spr.screenCenter(X);
 		});
 	}
+	for (touch in FlxG.touches.list)
+
+       {   
+       if (touch.justPressed)
+            {
+            if (touch.overlaps(back))
+            {
+            MusicBeatState.switchState(new TitleState());
+           }
+           }
+           }
+}
 }
