@@ -280,15 +280,7 @@ class MainMenuState extends MusicBeatState
         cnm.updateHitbox(); 
     
 });
-
-		super.update(elapsed);
-
-		menuItems.forEach(function(spr:FlxSprite)
-		{
-			spr.screenCenter(X);
-		});
-	
-	for (touch in FlxG.touches.list)
+       for (touch in FlxG.touches.list)
 
        {   
        if (touch.justPressed)
@@ -299,5 +291,14 @@ class MainMenuState extends MusicBeatState
            }
            }
            }
+
+		super.update(elapsed);
+
+		menuItems.forEach(function(spr:FlxSprite)
+		{
+			spr.screenCenter(X);
+		});
+	
+	
 }
 }
