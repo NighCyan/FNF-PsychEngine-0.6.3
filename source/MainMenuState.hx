@@ -119,7 +119,7 @@ class MainMenuState extends MusicBeatState
 		back.frames = Paths.getSparrowAtlas('backbutton');
 		back.scale.set(logoJSON.backScaleX, logoJSON.backScaleY);
 		add(back);
-		var window:FlxSprite = new FlxSprite(logoJSON.windowX,logoJSON.windowY);
+		var window:FlxSprite = new FlxSprite(logoJSON.windowX,logoJSON.windowY)
 		back.frames = Paths.getSparrowAtlas('window');
 		window.scale.set(logoJSON.windowScaleX, logoJSON.windowScaleY);
 		add(window);
@@ -275,8 +275,8 @@ class MainMenuState extends MusicBeatState
             {
             //洽汐来！
             }
-            cnm.updateHitbox(); 
-        }*/
+            cnm.updateHitbox(); */
+        }
         cnm.updateHitbox(); 
     
 });
