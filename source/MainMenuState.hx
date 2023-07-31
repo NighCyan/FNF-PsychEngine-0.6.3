@@ -116,11 +116,11 @@ class MainMenuState extends MusicBeatState
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
         var back:FlxSprite = new FlxSprite(logoJSON.backX, logoJSON.backY);
-		back.frames = Paths.getSparrowAtlas('backbutton');
+		back.frames = Paths.image('backbutton');
 		back.scale.set(logoJSON.backScaleX, logoJSON.backScaleY);
 		add(back);
 		var window:FlxSprite = new FlxSprite(logoJSON.windowX,logoJSON.windowY);
-		back.frames = Paths.getSparrowAtlas('window');
+		window.frames = Paths.image('window');
 		window.scale.set(logoJSON.windowScaleX, logoJSON.windowScaleY);
 		add(window);
 		camFollow = new FlxObject(0, 0, 1, 1);
@@ -133,13 +133,7 @@ class MainMenuState extends MusicBeatState
 		logo.scale.set(logoJSON.scaleX, logoJSON.scaleY);
 	    logo.animation.play('bump');
 		add(logo);
-		var window:FlxSprite = new FlxSprite(logoJSON.windowX, logoJSON.windowY);
-		logo.frames = Paths.getSparrowAtlas('logoBumpin-GOP');
-		logo.animation.addByPrefix('bump', 'logo bumpin', 24,true);
-		logo.scale.set(logoJSON.scaleX, logoJSON.scaleY);
-	    logo.animation.play('bump');
-		add(logo);
-
+		
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
