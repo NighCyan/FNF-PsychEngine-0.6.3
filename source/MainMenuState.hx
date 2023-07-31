@@ -287,7 +287,7 @@ class MainMenuState extends MusicBeatState
 		{
 			spr.screenCenter(X);
 		});
-	}
+	
 	for (touch in FlxG.touches.list)
 
        {   
