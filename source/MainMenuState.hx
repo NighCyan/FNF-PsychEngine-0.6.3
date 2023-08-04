@@ -76,7 +76,7 @@ class MainMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
-
+    var back:FlxSprite;
 	override function create()
 	{
 	    FlxG.mouse.visible = true;
@@ -115,7 +115,7 @@ class MainMenuState extends MusicBeatState
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
-        var back:FlxSprite = new FlxSprite(logoJSON.backX, logoJSON.backY);
+        back = new FlxSprite(logoJSON.backX, logoJSON.backY);
 		back.frames = Paths.getSparrowAtlas('backbutton');
 		back.scale.set(logoJSON.backScaleX, logoJSON.backScaleY);
 		add(back);
@@ -271,7 +271,6 @@ case 3:
     
 });
        for (touch in FlxG.touches.list)
-
        {   
        if (touch.justPressed)
             {
