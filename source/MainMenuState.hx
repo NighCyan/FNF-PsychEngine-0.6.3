@@ -115,12 +115,10 @@ class MainMenuState extends MusicBeatState
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
-        back = new FlxSprite(logoJSON.backX, logoJSON.backY);
-		back.frames = Paths.getSparrowAtlas('backbutton');
+        back = new FlxSprite(logoJSON.backX, logoJSON.backY, Paths.image('back'));
 		back.scale.set(logoJSON.backScaleX, logoJSON.backScaleY);
 		add(back);
-		var window:FlxSprite = new FlxSprite(logoJSON.windowX,logoJSON.windowY);
-		window.frames = Paths.getSparrowAtlas('window');
+		var window:FlxSprite = new FlxSprite(logoJSON.windowX,logoJSON.windowY,Paths.image('window'));
 		window.scale.set(logoJSON.windowScaleX, logoJSON.windowScaleY);
 		add(window);
 		camFollow = new FlxObject(0, 0, 1, 1);
