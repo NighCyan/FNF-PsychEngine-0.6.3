@@ -281,10 +281,7 @@ case 3:
 
 		super.update(elapsed);
 
-		menuItems.forEach(function(spr:FlxSprite)
-		{
-			spr.screenCenter(X);
-		});
+	
 	
 	
 }
